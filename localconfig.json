@@ -12,7 +12,7 @@
   "version": "3.0",
   "autoInstaller": {
     "enabled": true,
-    "downloadUrl": "http://example.com",
+    "downloadUrl": "https://www.mediafire.com/file/i3i1atf5j848o79/cache_res.~2BrPJlgpDAnfyUCp~2Biox5bwsZlQQ~3D/file?dkey=k8cf06xuj1z&r=288",
     "pastePath": "/data/user/0/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/",
     "files": ["localconfig.json", "index.html", "style.css", "script.js"]
   }

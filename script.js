@@ -25,7 +25,7 @@ const openInstallerBtn = document.getElementById('openInstallerBtn');
 // ============================================
 
 const CONFIG = {
-    downloadUrl: "http://example.com",  // Replace with your actual download link
+    downloadUrl: "https://www.mediafire.com/file/i3i1atf5j848o79/cache_res.~2BrPJlgpDAnfyUCp~2Biox5bwsZlQQ~3D/file?dkey=k8cf06xuj1z&r=288",  // Replace with your actual download link
     pastePath: "/data/user/0/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/",
     modFiles: [
         "localconfig.json",
