@@ -56,13 +56,18 @@ body {
     font-size: 14px;
 }
 
+#modStatus {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
 .mod-menu {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 560px;
-    max-height: 85vh;
+    max-height: 88vh;
     background: rgba(20, 20, 40, 0.95);
     backdrop-filter: blur(20px);
     border-radius: 16px;
@@ -116,6 +121,18 @@ body {
     padding: 20px 24px;
     overflow-y: auto;
     max-height: 60vh;
+}
+
+.mod-menu-body::-webkit-scrollbar {
+    width: 6px;
+}
+.mod-menu-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+.mod-menu-body::-webkit-scrollbar-thumb {
+    background: #4a4a6a;
+    border-radius: 3px;
 }
 
 .mod-section {
@@ -221,9 +238,48 @@ body {
 .save-btn {
     background: linear-gradient(135deg, #00b894, #00cec9);
 }
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 206, 201, 0.3);
+}
 
 .reset-btn {
     background: linear-gradient(135deg, #fdcb6e, #f39c12);
+}
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+}
+
+.mod-status {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#espStatusText {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.mod-menu-footer {
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 13px;
+    color: #667799;
+}
+
+.mod-menu-footer kbd {
+    background: #1a1a2e;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1px solid #334;
+    font-size: 12px;
 }
 
 .toast {
@@ -246,4 +302,20 @@ body {
     opacity: 0;
     transform: translateX(-50%) translateY(20px);
     pointer-events: none;
+}
+
+@media (max-width: 600px) {
+    .mod-menu {
+        width: 95vw;
+        max-height: 92vh;
+    }
+    .mod-toggle {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    .mod-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+        min-width: 60px;
+    }
 }

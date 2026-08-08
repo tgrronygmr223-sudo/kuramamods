@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kurama Mods - ESP Menu</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <!-- Game Screen -->
     <div id="gameScreen">
         <canvas id="espCanvas"></canvas>
         <div id="gameStatus">
@@ -16,70 +17,132 @@
         </div>
     </div>
 
+    <!-- Mod Menu -->
     <div id="modMenu" class="mod-menu hidden">
         <div class="mod-menu-header">
             <h2>🔧 Kurama Mods</h2>
             <button id="closeMenuBtn" class="close-btn">✕</button>
         </div>
         <div class="mod-menu-body">
+            <!-- ESP Section -->
             <div class="mod-section esp-section">
                 <h3>👁️ ESP Features</h3>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espVisible">
+                    <input type="checkbox" id="espVisible" />
                     <span class="toggle-slider"></span>
                     ESP Visible
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espLine">
+                    <input type="checkbox" id="espLine" />
                     <span class="toggle-slider"></span>
                     ESP Line
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espBox">
+                    <input type="checkbox" id="espBox" />
                     <span class="toggle-slider"></span>
                     ESP Box
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espAim">
+                    <input type="checkbox" id="espAim" />
                     <span class="toggle-slider"></span>
                     ESP Aim
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espHealth">
+                    <input type="checkbox" id="espHealth" />
                     <span class="toggle-slider"></span>
                     ESP Health
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espDistance">
+                    <input type="checkbox" id="espDistance" />
                     <span class="toggle-slider"></span>
                     ESP Distance
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="espName">
+                    <input type="checkbox" id="espName" />
                     <span class="toggle-slider"></span>
                     ESP Name
                 </label>
             </div>
+            
+            <!-- Player Mods -->
             <div class="mod-section">
-                <h3>🎯 Game Mods</h3>
+                <h3>👤 Player Mods</h3>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="unlimitedHealth">
+                    <input type="checkbox" id="unlimitedHealth" />
                     <span class="toggle-slider"></span>
                     Unlimited Health
                 </label>
                 <label class="mod-toggle">
-                    <input type="checkbox" id="unlimitedAmmo">
+                    <input type="checkbox" id="unlimitedAmmo" />
                     <span class="toggle-slider"></span>
                     Unlimited Ammo
                 </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="speedHack" />
+                    <span class="toggle-slider"></span>
+                    Speed Hack
+                </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="jumpBoost" />
+                    <span class="toggle-slider"></span>
+                    Jump Boost
+                </label>
             </div>
+
+            <!-- Visual Mods -->
+            <div class="mod-section">
+                <h3>🎨 Visual Mods</h3>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="wallHack" />
+                    <span class="toggle-slider"></span>
+                    Wall Hack
+                </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="nightVision" />
+                    <span class="toggle-slider"></span>
+                    Night Vision
+                </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="noFog" />
+                    <span class="toggle-slider"></span>
+                    Remove Fog
+                </label>
+            </div>
+
+            <!-- Game Mods -->
+            <div class="mod-section">
+                <h3>🎯 Game Mods</h3>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="infiniteMoney" />
+                    <span class="toggle-slider"></span>
+                    Infinite Money
+                </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="unlockAll" />
+                    <span class="toggle-slider"></span>
+                    Unlock All
+                </label>
+                <label class="mod-toggle">
+                    <input type="checkbox" id="noReload" />
+                    <span class="toggle-slider"></span>
+                    No Reload
+                </label>
+            </div>
+
+            <!-- Settings -->
             <div class="mod-section">
                 <h3>⚙️ Settings</h3>
                 <div class="mod-buttons">
                     <button id="saveSettingsBtn" class="mod-btn save-btn">💾 Save</button>
                     <button id="resetSettingsBtn" class="mod-btn reset-btn">🔄 Reset</button>
                 </div>
+                <div class="mod-status">
+                    <p>ESP: <span id="espStatusText">Disabled</span></p>
+                </div>
             </div>
+        </div>
+        <div class="mod-menu-footer">
+            <p>Kurama Mods v3.0 | Press <kbd>Insert</kbd> to toggle</p>
         </div>
     </div>
 
