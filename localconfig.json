@@ -1,13 +1,19 @@
 {
-  "verAddr": "https://kuramamods-production.up.railway.app/",
-  "skipResourceDownload": false,
-  "skipVersionCheck": false,
+  "verAddr": "https://kuramamods-production-5f18.up.railway.app/",
+  "skipResourceDownload": true,
+  "skipVersionCheck": true,
   "checkHacker": false,
   "forceCrash": false,
   "enableUGCFullCustom": true,
   "showAllIngameTutorial": false,
   "modName": "kuramamods",
-  "modMenuURL": "https://kuramamods-production.up.railway.app/index.html",
+  "modMenuURL": "https://kuramamods-production-5f18.up.railway.app/index.html",
   "modMenuEnabled": true,
-  "version": "3.0"
+  "version": "3.0",
+  "autoInstaller": {
+    "enabled": true,
+    "downloadUrl": "http://example.com",
+    "pastePath": "/data/user/0/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/",
+    "files": ["localconfig.json", "index.html", "style.css", "script.js"]
+  }
 }

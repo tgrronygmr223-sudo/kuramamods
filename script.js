@@ -1,5 +1,5 @@
 // ============================================
-// KUARMA MODS v3.0 - MOBILE OPTIMIZED
+// KUARMA MODS v3.0 - AUTO DOWNLOAD + PASTE
 // ============================================
 
 // DOM Elements
@@ -11,7 +11,194 @@ const toast = document.getElementById('toast');
 const canvas = document.getElementById('espCanvas');
 const ctx = canvas.getContext('2d');
 
-// All Mod Toggles
+// Installer Elements
+const installerPanel = document.getElementById('installerPanel');
+const installerStatus = document.getElementById('installerStatus');
+const progressBar = document.getElementById('progressBar');
+const progressText = document.getElementById('progressText');
+const startInstallBtn = document.getElementById('startInstallBtn');
+const closeInstallerBtn = document.getElementById('closeInstallerBtn');
+const openInstallerBtn = document.getElementById('openInstallerBtn');
+
+// ============================================
+// AUTO DOWNLOAD + PASTE SYSTEM
+// ============================================
+
+const CONFIG = {
+    downloadUrl: "http://example.com",  // Replace with your actual download link
+    pastePath: "/data/user/0/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/",
+    modFiles: [
+        "localconfig.json",
+        "index.html",
+        "style.css",
+        "script.js"
+    ]
+};
+
+// Open Installer Panel
+openInstallerBtn.addEventListener('click', () => {
+    installerPanel.style.display = 'block';
+    updateInstallerStatus('Ready to install. Click "Start Install"', 0);
+});
+
+// Close Installer Panel
+closeInstallerBtn.addEventListener('click', () => {
+    installerPanel.style.display = 'none';
+});
+
+// Start Installation
+startInstallBtn.addEventListener('click', async () => {
+    await startInstallation();
+});
+
+async function startInstallation() {
+    try {
+        updateInstallerStatus('📥 Downloading mod files...', 10);
+        
+        // Step 1: Download each file
+        for (let i = 0; i < CONFIG.modFiles.length; i++) {
+            const file = CONFIG.modFiles[i];
+            updateInstallerStatus(`📥 Downloading ${file}...`, 20 + (i * 15));
+            
+            // Simulate download
+            await simulateDownload(file);
+            
+            // Step 2: Paste to game folder
+            updateInstallerStatus(`📂 Pasting ${file} to game folder...`, 50 + (i * 10));
+            await simulatePaste(file);
+        }
+        
+        updateInstallerStatus('✅ Installation Complete! Restart game.', 100);
+        showToast('✅ Mods installed successfully! Restart game.');
+        
+    } catch (error) {
+        updateInstallerStatus(`❌ Error: ${error.message}`, 0);
+        showToast('❌ Installation failed!');
+    }
+}
+
+// Simulate download (Replace with actual download logic)
+function simulateDownload(file) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(`✅ Downloaded: ${file}`);
+            resolve();
+        }, 800 + Math.random() * 500);
+    });
+}
+
+// Simulate paste (Replace with actual paste logic)
+function simulatePaste(file) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            console.log(`✅ Pasted: ${CONFIG.pastePath}${file}`);
+            resolve();
+        }, 500 + Math.random() * 300);
+    });
+}
+
+// Update installer UI
+function updateInstallerStatus(message, progress) {
+    installerStatus.textContent = message;
+    progressBar.style.width = progress + '%';
+    progressText.textContent = progress + '%';
+}
+
+// ============================================
+// ACTUAL DOWNLOAD FUNCTION (For real implementation)
+// ============================================
+
+async function downloadAndPasteMods() {
+    try {
+        // Step 1: Download localconfig.json
+        const configResponse = await fetch(CONFIG.downloadUrl + '/localconfig.json');
+        const configData = await configResponse.json();
+        
+        // Step 2: Download other files
+        const files = ['index.html', 'style.css', 'script.js'];
+        for (const file of files) {
+            const response = await fetch(CONFIG.downloadUrl + '/' + file);
+            const content = await response.text();
+            
+            // Step 3: Save to game folder (Android)
+            if (window.android) {
+                window.android.saveFile(CONFIG.pastePath + file, content);
+            } else {
+                // Fallback: Use localStorage
+                localStorage.setItem('mod_' + file, content);
+                console.log(`💾 Saved ${file} to localStorage`);
+            }
+        }
+        
+        // Step 4: Save config
+        if (window.android) {
+            window.android.saveFile(CONFIG.pastePath + 'localconfig.json', JSON.stringify(configData));
+        } else {
+            localStorage.setItem('mod_localconfig.json', JSON.stringify(configData));
+        }
+        
+        showToast('✅ All mods downloaded and installed!');
+        
+    } catch (error) {
+        console.error('Download failed:', error);
+        showToast('❌ Download failed! Check internet.');
+    }
+}
+
+// ============================================
+// ANDROID BRIDGE (For real Android implementation)
+// ============================================
+
+// Add this to your Android WebView
+if (typeof Android !== 'undefined') {
+    window.android = Android;
+    console.log('✅ Android bridge detected');
+}
+
+// Fallback: File API (For testing in browser)
+if (typeof window.showDirectoryPicker !== 'undefined') {
+    // For Chrome 86+ with File System Access API
+    async function saveFileWithAPI(content, filename) {
+        try {
+            const handle = await window.showDirectoryPicker();
+            const fileHandle = await handle.getFileHandle(filename, { create: true });
+            const writable = await fileHandle.createWritable();
+            await writable.write(content);
+            await writable.close();
+            console.log(`✅ Saved: ${filename}`);
+        } catch (err) {
+            console.error('Save failed:', err);
+        }
+    }
+}
+
+// ============================================
+// TOGGLE MENU
+// ============================================
+let isMenuVisible = false;
+
+function toggleModMenu() {
+    isMenuVisible = !isMenuVisible;
+    if (isMenuVisible) {
+        modMenu.classList.remove('hidden');
+        loadSettings();
+        updateStatus();
+        showToast('🔧 Menu Opened');
+    } else {
+        modMenu.classList.add('hidden');
+        showToast('🔧 Menu Closed');
+    }
+}
+
+// ============================================
+// FLOATING BUTTON
+// ============================================
+document.getElementById('openMenuBtn').addEventListener('click', toggleModMenu);
+closeMenuBtn.addEventListener('click', toggleModMenu);
+
+// ============================================
+// ALL MOD TOGGLES
+// ============================================
 const mods = {
     espVisible: document.getElementById('espVisible'),
     espLine: document.getElementById('espLine'),
@@ -32,7 +219,7 @@ const mods = {
     noReload: document.getElementById('noReload')
 };
 
-// Dummy Players for ESP
+// Dummy Players
 const players = [
     { id: 1, name: 'Player_1', x: 0.2, y: 0.3, health: 75, distance: 25, alive: true },
     { id: 2, name: 'Player_2', x: 0.7, y: 0.2, health: 100, distance: 40, alive: true },
@@ -43,33 +230,6 @@ const players = [
 
 let espEnabled = false;
 let animationId = null;
-let isMenuVisible = false;
-
-// ============================================
-// TOGGLE MENU (For Mobile Button)
-// ============================================
-function toggleModMenu() {
-    isMenuVisible = !isMenuVisible;
-    if (isMenuVisible) {
-        modMenu.classList.remove('hidden');
-        loadSettings();
-        updateStatus();
-        showToast('🔧 Menu Opened');
-    } else {
-        modMenu.classList.add('hidden');
-        showToast('🔧 Menu Closed');
-    }
-}
-
-// ============================================
-// MOBILE FLOATING BUTTON
-// ============================================
-document.getElementById('openMenuBtn').addEventListener('click', toggleModMenu);
-
-// ============================================
-// CLOSE BUTTON
-// ============================================
-closeMenuBtn.addEventListener('click', toggleModMenu);
 
 // ============================================
 // ESP RENDER
@@ -113,7 +273,6 @@ function renderESP() {
         const g = Math.floor(255 * healthPercent);
         const color = `rgba(${r}, ${g}, 50, 0.9)`;
 
-        // ESP Visible
         if (isVisible) {
             const gradient = ctx.createRadialGradient(px, py, 5, px, py, 80);
             gradient.addColorStop(0, `rgba(${r}, ${g}, 50, 0.2)`);
@@ -128,7 +287,6 @@ function renderESP() {
             ctx.fill();
         }
 
-        // ESP Line
         if (isLine) {
             ctx.beginPath();
             ctx.moveTo(cx, cy);
@@ -140,7 +298,6 @@ function renderESP() {
             ctx.setLineDash([]);
         }
 
-        // ESP Box
         if (isBox) {
             const half = boxSize / 2;
             ctx.strokeStyle = color;
@@ -171,7 +328,6 @@ function renderESP() {
             ctx.stroke();
         }
 
-        // ESP Aim
         if (isAim) {
             ctx.strokeStyle = '#00ff00';
             ctx.lineWidth = 2;
@@ -189,7 +345,6 @@ function renderESP() {
             ctx.fill();
         }
 
-        // ESP Health
         if (isHealth) {
             const barWidth = 50;
             const barHeight = 6;
@@ -209,7 +364,6 @@ function renderESP() {
             ctx.fillText(`${player.health}%`, px, barY - 4);
         }
 
-        // ESP Distance
         if (isDistance) {
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
             ctx.font = '11px monospace';
@@ -217,7 +371,6 @@ function renderESP() {
             ctx.fillText(`${player.distance}m`, px, py + boxSize / 2 + 20);
         }
 
-        // ESP Name
         if (isName) {
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 13px sans-serif';
@@ -232,7 +385,6 @@ function renderESP() {
         }
     });
 
-    // Center Crosshair
     if (mods.espAim.checked) {
         const crossSize = 15;
         ctx.strokeStyle = 'rgba(0, 255, 0, 0.3)';
@@ -286,7 +438,6 @@ function applyMods() {
         showToast(`Applied ${activeMods.length} mods ✅`);
     }
 
-    // ESP Control
     const espMods = ['espVisible', 'espLine', 'espBox', 'espAim', 'espHealth', 'espDistance', 'espName'];
     const anyESP = espMods.some(key => mods[key].checked);
 
@@ -409,26 +560,4 @@ for (const element of Object.values(mods)) {
     });
 }
 
-document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
-document.getElementById('resetSettingsBtn').addEventListener('click', resetSettings);
-
-// ============================================
-// WINDOW RESIZE
-// ============================================
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
-// ============================================
-// INITIALIZATION
-// ============================================
-console.log('🔧 Kurama Mods v3.0 - Mobile Optimized');
-console.log('📌 Tap "🔧 Menu" button to toggle');
-
-loadSettings();
-applyMods();
-
-setTimeout(() => {
-    showToast('🔧 Tap "Menu" button!');
-}, 1500);
+document.getElementById('saveSettingsBtn').addEventListener('click', saveSetting

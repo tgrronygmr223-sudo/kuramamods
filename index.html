@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Kurama Mods - ESP Menu</title>
+    <title>Kurama Mods - Auto Installer</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,15 +12,27 @@
         <canvas id="espCanvas"></canvas>
         <div id="gameStatus">
             <p>🎮 Kurama Mods v3.0</p>
-            <p style="font-size: 14px; color: #8899bb;">Tap the <b style="color:#ff6b6b;">🔧 Menu</b> button below</p>
+            <p style="font-size: 14px; color: #8899bb;">Tap <b style="color:#ff6b6b;">🔧 Menu</b> button</p>
             <p>Status: <span id="modStatus">Ready</span></p>
         </div>
     </div>
 
-    <!-- FLOATING MENU BUTTON (Mobile-Friendly) -->
-    <button id="openMenuBtn">
-        🔧 Menu
-    </button>
+    <!-- Auto Installer Panel -->
+    <div id="installerPanel" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:10000; background:rgba(0,0,0,0.9); padding:20px; border-radius:12px; color:white; width:90%; max-width:400px; border:1px solid #ff6b6b;">
+        <h3 style="color:#ff6b6b;">📦 Auto Installer</h3>
+        <div id="installerStatus" style="margin:15px 0; font-size:14px; color:#aaa;">Initializing...</div>
+        <div style="width:100%; height:6px; background:#333; border-radius:3px; overflow:hidden;">
+            <div id="progressBar" style="width:0%; height:100%; background:linear-gradient(90deg,#ff6b6b,#ffd93d); transition:width 0.5s;"></div>
+        </div>
+        <div id="progressText" style="margin:10px 0; font-size:12px; color:#888;">0%</div>
+        <div style="display:flex; gap:10px; margin-top:15px;">
+            <button id="startInstallBtn" style="flex:1; padding:12px; background:#ff6b6b; border:none; border-radius:8px; color:white; font-weight:bold; cursor:pointer;">▶ Start Install</button>
+            <button id="closeInstallerBtn" style="flex:1; padding:12px; background:#444; border:none; border-radius:8px; color:white; cursor:pointer;">✕ Close</button>
+        </div>
+    </div>
+
+    <!-- Floating Menu Button -->
+    <button id="openMenuBtn">🔧 Menu</button>
 
     <!-- Mod Menu -->
     <div id="modMenu" class="mod-menu hidden">
@@ -29,6 +41,17 @@
             <button id="closeMenuBtn" class="close-btn">✕</button>
         </div>
         <div class="mod-menu-body">
+            <!-- Installer Section -->
+            <div class="mod-section" style="background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.3); border-radius:10px; padding:12px;">
+                <h3 style="color:#ff6b6b;">📦 Auto Installer</h3>
+                <button id="openInstallerBtn" style="width:100%; padding:12px; background:linear-gradient(135deg,#ff6b6b,#ffd93d); border:none; border-radius:8px; color:white; font-weight:bold; cursor:pointer; font-size:16px;">
+                    📥 Download & Install Mods
+                </button>
+                <div style="margin-top:8px; font-size:11px; color:#888; text-align:center;">
+                    Path: /data/user/0/com.dts.freefireth/files/contentcache/Compulsory/android/gameassetbundles/
+                </div>
+            </div>
+
             <!-- ESP Section -->
             <div class="mod-section esp-section">
                 <h3>👁️ ESP Features</h3>
