@@ -1,5 +1,5 @@
 // ============================================
-// KUARMA MODS v3.0 - Complete Mod Menu + ESP
+// KUARMA MODS v3.0 - MOBILE OPTIMIZED
 // ============================================
 
 // DOM Elements
@@ -43,6 +43,33 @@ const players = [
 
 let espEnabled = false;
 let animationId = null;
+let isMenuVisible = false;
+
+// ============================================
+// TOGGLE MENU (For Mobile Button)
+// ============================================
+function toggleModMenu() {
+    isMenuVisible = !isMenuVisible;
+    if (isMenuVisible) {
+        modMenu.classList.remove('hidden');
+        loadSettings();
+        updateStatus();
+        showToast('🔧 Menu Opened');
+    } else {
+        modMenu.classList.add('hidden');
+        showToast('🔧 Menu Closed');
+    }
+}
+
+// ============================================
+// MOBILE FLOATING BUTTON
+// ============================================
+document.getElementById('openMenuBtn').addEventListener('click', toggleModMenu);
+
+// ============================================
+// CLOSE BUTTON
+// ============================================
+closeMenuBtn.addEventListener('click', toggleModMenu);
 
 // ============================================
 // ESP RENDER
@@ -120,7 +147,6 @@ function renderESP() {
             ctx.lineWidth = 2;
             ctx.strokeRect(px - half, py - half, boxSize, boxSize);
             
-            // Corner accents
             const cornerSize = 10;
             ctx.lineWidth = 2.5;
             ctx.beginPath();
@@ -227,7 +253,6 @@ function renderESP() {
         ctx.fill();
     }
 
-    // FPS counter
     ctx.fillStyle = 'rgba(255,255,255,0.2)';
     ctx.font = '11px monospace';
     ctx.textAlign = 'left';
@@ -241,34 +266,6 @@ function espLoop() {
     renderESP();
     animationId = requestAnimationFrame(espLoop);
 }
-
-// ============================================
-// TOGGLE MOD MENU
-// ============================================
-let isMenuVisible = false;
-
-function toggleModMenu() {
-    isMenuVisible = !isMenuVisible;
-    if (isMenuVisible) {
-        modMenu.classList.remove('hidden');
-        loadSettings();
-        updateStatus();
-    } else {
-        modMenu.classList.add('hidden');
-    }
-}
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Insert' || (e.key === 'i' && e.ctrlKey)) {
-        e.preventDefault();
-        toggleModMenu();
-    }
-    if (e.key === 'Escape' && isMenuVisible) {
-        toggleModMenu();
-    }
-});
-
-closeMenuBtn.addEventListener('click', toggleModMenu);
 
 // ============================================
 // APPLY MODS
@@ -315,7 +312,7 @@ function applyMods() {
 }
 
 // ============================================
-// GAME MODS (Simulation)
+// GAME MODS
 // ============================================
 function applyGameMods(activeMods) {
     const gameSim = {
@@ -334,7 +331,7 @@ function applyGameMods(activeMods) {
     const statusDiv = document.getElementById('gameStatus');
     statusDiv.innerHTML = `
         <p>🎮 Game Running...</p>
-        <p>Press <kbd>Insert</kbd> to toggle Mod Menu</p>
+        <p style="font-size: 14px; color: #8899bb;">Tap <b style="color:#ff6b6b;">🔧 Menu</b> button</p>
         <div style="margin-top:15px; font-size:13px; background:rgba(0,0,0,0.3); padding:12px; border-radius:8px; text-align:left;">
             <p>❤️ Health: ${gameSim.health} | 🔫 Ammo: ${gameSim.ammo}</p>
             <p>💨 Speed: ${gameSim.speed} | 🦘 Jump: ${gameSim.jump}</p>
@@ -347,7 +344,7 @@ function applyGameMods(activeMods) {
 }
 
 // ============================================
-// TOAST NOTIFICATION
+// TOAST
 // ============================================
 let toastTimeout;
 
@@ -424,46 +421,14 @@ window.addEventListener('resize', () => {
 });
 
 // ============================================
-// DRAG MENU
-// ============================================
-let isDragging = false;
-let dragOffsetX, dragOffsetY;
-
-modMenu.addEventListener('mousedown', (e) => {
-    if (e.target.closest('.mod-menu-header')) {
-        isDragging = true;
-        const rect = modMenu.getBoundingClientRect();
-        dragOffsetX = e.clientX - rect.left;
-        dragOffsetY = e.clientY - rect.top;
-        modMenu.style.cursor = 'grabbing';
-    }
-});
-
-document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        modMenu.style.left = (e.clientX - dragOffsetX) + 'px';
-        modMenu.style.top = (e.clientY - dragOffsetY) + 'px';
-        modMenu.style.transform = 'none';
-    }
-});
-
-document.addEventListener('mouseup', () => {
-    if (isDragging) {
-        isDragging = false;
-        modMenu.style.cursor = 'default';
-    }
-});
-
-// ============================================
 // INITIALIZATION
 // ============================================
-console.log('🔧 Kurama Mods v3.0 Loaded');
-console.log('📌 Press Insert to open mod menu');
-console.log('🔗 GitHub: https://github.com/tgrronygmr223-sudo/kuramamods');
+console.log('🔧 Kurama Mods v3.0 - Mobile Optimized');
+console.log('📌 Tap "🔧 Menu" button to toggle');
 
 loadSettings();
 applyMods();
 
 setTimeout(() => {
-    showToast('🔧 Kurama Mods Ready! Press Insert');
-}, 1000);
+    showToast('🔧 Tap "Menu" button!');
+}, 1500);

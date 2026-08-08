@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Kurama Mods - ESP Menu</title>
     <link rel="stylesheet" href="style.css" />
 </head>
@@ -12,10 +12,15 @@
         <canvas id="espCanvas"></canvas>
         <div id="gameStatus">
             <p>🎮 Kurama Mods v3.0</p>
-            <p>Press <kbd>Insert</kbd> to open Mod Menu</p>
+            <p style="font-size: 14px; color: #8899bb;">Tap the <b style="color:#ff6b6b;">🔧 Menu</b> button below</p>
             <p>Status: <span id="modStatus">Ready</span></p>
         </div>
     </div>
+
+    <!-- FLOATING MENU BUTTON (Mobile-Friendly) -->
+    <button id="openMenuBtn">
+        🔧 Menu
+    </button>
 
     <!-- Mod Menu -->
     <div id="modMenu" class="mod-menu hidden">
@@ -142,7 +147,7 @@
             </div>
         </div>
         <div class="mod-menu-footer">
-            <p>Kurama Mods v3.0 | Press <kbd>Insert</kbd> to toggle</p>
+            <p>Kurama Mods v3.0 | Tap <b>🔧 Menu</b> to toggle</p>
         </div>
     </div>
 
